@@ -19,6 +19,7 @@ Citizen.CreateThread(function()
                 isPedOnVehicle = IsPedInAnyVehicle(PlayerPedId()),
             }
         })
+        DisplayRadar(IsPedInAnyVehicle(PlayerPedId()))
         Citizen.Wait(1000)
     end
 end)
