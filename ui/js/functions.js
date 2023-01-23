@@ -1,35 +1,25 @@
-function updateStatusHud(data) {
-    const { health, shield, hunger, thirst } = data;
-
+function updateStatusHud({ health, shield, hunger, thirst }) {
     const STATUS_CONFIG = [
         { name: 'health', value: Math.round(health) },
         { name: 'shield', value: Math.round(shield) },
         { name: 'hunger', value: Math.round(hunger) != -100 ? Math.round(hunger) : '0' },
         { name: 'thirst', value: Math.round(thirst) },
     ]
-
-    for (let statusHud of STATUS_CONFIG) {
-        $(`.${statusHud.name}Val`).css({'height': `${statusHud.value}%`})
-    }
-
-    console.log('Hace el update')
+    STATUS_CONFIG.forEach(({ name, value }) => {
+        $(`.${name}Val`).css({'height': `${value}%`});
+    })
 }
 
 
 function updateMapAnchor(isPedOnVehicle) {
-    $('.hud').css(isPedOnVehicle ? {'left': '16vw'} : {'left': '2.5vw'})
+    $('.hud').css(isPedOnVehicle ? {'left': '16vw'} : {'left': '2.5vw'});
 }
 
-function startEventListener(event) {
-    const { type, data } = event.data;
-
+function startEventListener({ info }) {
+    const { type, data } = info;
+    const { status, isPedOnVehicle } = data;
     if (type === 'update') {
-        updateStatusHud(data.status)
-        updateMapAnchor(data.isPedOnVehicle)
+        updateStatusHud(status);
+        updateMapAnchor(isPedOnVehicle);
     }
-
-    console.log(JSON.stringify(data))
 }
-
-
-console.log('MARICON')
